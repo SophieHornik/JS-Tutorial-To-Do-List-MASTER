@@ -23,8 +23,19 @@ document.addEventListener("keyup",function(event){
     if(KeyboardEvent.keyCode13){
 const toDo = input.value;
 if(toDo){
-addToDo(toDo);
-}
+    //ch6
+addToDo(toDo,id,false,false);
+list.push(
+    {
+        name:toDo,
+        id: id,
+        done:false,
+        trash:false
+        }
+);
+
 input.value="";
+id++;
     }
 });
+//ch6
