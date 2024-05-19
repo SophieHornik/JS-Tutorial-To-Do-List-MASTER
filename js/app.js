@@ -4,15 +4,21 @@ const clear = document.querySelector(".clear");
 const dateElement = document.getElementById("date");
 const list = document.getElementById("list");
 const input = document.getElementById("input");
-//ch3
+
 const element = document.getElementById("element");
 element.insertAdjacentHTML(position, text);
-//ch4
-function addToDo(toDo){
+const CHECK="fa-check-circle";
+const UNCHECK="fa-circle-thin";
+const Line_through="lineThrough"
+
+function addToDo(toDo,id,done,trash){
+    if(trash){ return;}
+    const DONE = done ? CHECK : UNCHECK;
+    const LINE= done? Line_Through : "";
 const text = `<li class="item">
-    <i class="co fa fa-circle-thin" job="complete"></i>
-    <p class="text"> ${toDo} </p>
-    <i class="de fa fa-trash-o" job="delete"></i>
+    <i class="co fa  ${DONE}fa-circle-thin" job="complete" id="${id}></i>
+    <p class="text ${LINE}"> ${toDo} </p>
+    <i class="de fa fa-trash-o" job="delete" id="${id}"></i>
 </li>`
 const position="beforeend";
 list.insertAdjacentHTML(position,text);
@@ -38,4 +44,4 @@ input.value="";
 id++;
     }
 });
-//ch6
+//ch7
