@@ -18,3 +18,13 @@ const position="beforeend";
 list.insertAdjacentHTML(position,text);
 }
 addToDo("Drink Coffee");
+//ch5
+document.addEventListener("keyup",function(event){
+    if(KeyboardEvent.keyCode13){
+const toDo = input.value;
+if(toDo){
+addToDo(toDo);
+}
+input.value="";
+    }
+});
