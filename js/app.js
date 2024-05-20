@@ -63,3 +63,6 @@ removeToDo(element);
     }
 
 });
+localStorage.setItem('key','value');
+let variable = localStorage.getItem('key');
+localStorage.setItem("TODO",JSON.stringify(LIST));
