@@ -50,3 +50,4 @@ function completeToDo(element){
     element.parentNode.querySelector(".text").classList.toggle(LINE_THROUGH);
     LIST[element.id].done=LIST[element.id].done ? false: true;
 }
+element.parentNode.parentNode.removeChild(element.parentNode);
