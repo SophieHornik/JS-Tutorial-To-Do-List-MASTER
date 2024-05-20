@@ -54,3 +54,12 @@ function removeToDo(element){
 element.parentNode.parentNode.removeChild(element.parentNode);
 LIST[element.id].trash=true;
 }
+list.addEventListener("click",function(event){let element = event.target; 
+    const elementJOB = event.target.attributes.job.value;
+    if(elementJOB == "complete"){
+completeToDo(element);
+    } else if(elementJOB="delete"){
+removeToDo(element);
+    }
+
+});
