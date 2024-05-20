@@ -1,5 +1,4 @@
 // CODE EXPLAINED channel
-//ch2
 const clear = document.querySelector(".clear");
 const dateElement = document.getElementById("date");
 const list = document.getElementById("list");
@@ -29,7 +28,7 @@ document.addEventListener("keyup",function(event){
     if(KeyboardEvent.keyCode13){
 const toDo = input.value;
 if(toDo){
-    //ch6
+    
 addToDo(toDo,id,false,false);
 list.push(
     {
@@ -44,4 +43,10 @@ input.value="";
 id++;
     }
 });
-//ch7
+
+function completeToDo(element){
+    element.classList.toggle(CHECK);
+    element.classList.toggle(UNCHECK);
+    element.parentNode.querySelector(".text").classList.toggle(LINE_THROUGH);
+    LIST[element.id].done=LIST[element.id].done ? false: true;
+}
