@@ -1,68 +1,93 @@
-// CODE EXPLAINED channel
+//elements
 const clear = document.querySelector(".clear");
 const dateElement = document.getElementById("date");
 const list = document.getElementById("list");
 const input = document.getElementById("input");
-
-const element = document.getElementById("element");
-element.insertAdjacentHTML(position, text);
-const CHECK="fa-check-circle";
-const UNCHECK="fa-circle-thin";
-const Line_through="lineThrough"
-
-function addToDo(toDo,id,done,trash){
-    if(trash){ return;}
+//names
+const CHECK = "fa-check-circle";
+const UNCHECK = "fa-circle-thin";
+const LINE_THROUGH = "lineThrough";
+//date
+const options = {
+    weekday: "long",
+    month: "short",
+    day: "numeric"
+  };
+  const today = new Date();
+  dateElement.innerHTML = today.toLocaleDateString("en-us", options);
+  //to do function
+  function addToDo(toDo, id, done, trash) {
+    if (trash) {
+      return;
+    }
     const DONE = done ? CHECK : UNCHECK;
-    const LINE= done? Line_Through : "";
-const text = `<li class="item">
-    <i class="co fa  ${DONE}fa-circle-thin" job="complete" id="${id}></i>
-    <p class="text ${LINE}"> ${toDo} </p>
-    <i class="de fa fa-trash-o" job="delete" id="${id}"></i>
-</li>`
-const position="beforeend";
-list.insertAdjacentHTML(position,text);
+    const LINE = done ? LINE_THROUGH : "";
+    const item = `<li class="item">
+                  <i class="fa ${DONE} co" job="complete" id="${id}"></i>
+                  <p class="text ${LINE}">${toDo}</p>
+                  <i class="fa fa-trash-o de" job="delete" id="${id}"></i>
+                  </li>
+                  `;
+  
+    const position = "beforeend";
+    list.insertAdjacentHTML(position, item);
+  }
+  //enter key
+let LIST, id;
+let data = localStorage.getItem("TODO");
+if (data) {
+  LIST = JSON.parse(data);
+  id = LIST.length;
+  loadList(LIST); 
+} else {
+  LIST = [];
+  id = 0;
 }
-addToDo("Drink Coffee");
-//ch5
-document.addEventListener("keyup",function(event){
-    if(KeyboardEvent.keyCode13){
-const toDo = input.value;
-if(toDo){
-    
-addToDo(toDo,id,false,false);
-list.push(
-    {
-        name:toDo,
+function loadList(array) {
+  array.forEach(function(item) {
+    addToDo(item.name, item.id, item.done, item.trash);
+  });
+}
+clear.addEventListener("click", function(){
+  localStorage.clear;
+  location.reload();
+});
+
+
+document.addEventListener("keyup", function(event) {
+  if (event.keyCode == 13) {
+    const toDo = input.value;
+    if (toDo) {
+      addToDo(toDo, id, false, false);
+      LIST.push({
+        name: toDo,
         id: id,
-        done:false,
-        trash:false
-        }
-);
-
-input.value="";
-id++;
+        done: false,
+        trash: false
+      });
+      localStorage.setItem("TODO", JSON.stringify(LIST));
+      id++;
     }
+    input.value = "";
+  }
 });
-
-function completeToDo(element){
-    element.classList.toggle(CHECK);
-    element.classList.toggle(UNCHECK);
-    element.parentNode.querySelector(".text").classList.toggle(LINE_THROUGH);
-    LIST[element.id].done=LIST[element.id].done ? false: true;
+function completeToDo(element) {
+  element.classList.toggle(CHECK);
+  element.classList.toggle(UNCHECK);
+  element.parentNode.querySelector(".text").classList.toggle(LINE_THROUGH);
+  LIST[element.id].done = LIST[element.id].done ? false : true;
 }
-function removeToDo(element){
-element.parentNode.parentNode.removeChild(element.parentNode);
-LIST[element.id].trash=true;
+function removeToDo(element) {
+  element.parentNode.parentNode.removeChild(element.parentNode);
+  LIST[element.id].trash = true;
 }
-list.addEventListener("click",function(event){let element = event.target; 
-    const elementJOB = event.target.attributes.job.value;
-    if(elementJOB == "complete"){
-completeToDo(element);
-    } else if(elementJOB="delete"){
-removeToDo(element);
-    }
-
+list.addEventListener("click", function(event) {
+  const element = event.target; 
+  const elementJob = element.attributes.job.value;
+  if (elementJob == "complete") {
+    completeToDo(element);
+  } else if (elementJob == "delete") {
+    removeToDo(element);
+  }
+  localStorage.setItem("TODO", JSON.stringify(LIST));
 });
-localStorage.setItem('key','value');
-let variable = localStorage.getItem('key');
-localStorage.setItem("TODO",JSON.stringify(LIST));
